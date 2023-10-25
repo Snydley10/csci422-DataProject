@@ -35,12 +35,12 @@ with open("keys/EIA-Key.config") as f:
     eia_key=f.readline()
 
 request_params = {"api_key" : eia_key,
-                     "start" : "2013",
+                     "start" : "1990",
                      "end"   : "2021",
-                     "sort[0][column]" : "stateId",
-                     "sort[0][direction]" : "asc",
                      "sort[0][column]" : "period",
                      "sort[0][direction]" : "desc",
+                     "sort[1][column]" : "stateId",
+                     "sort[1][direction]" : "asc",
                      "data[]"           : "value",
                      "facets[seriesId][]": "BFPRB",
                      "facets[seriesId][]": "BMTCB",
@@ -52,24 +52,34 @@ request_params = {"api_key" : eia_key,
                      "facets[seriesId][]": "SOTGP",
                      "facets[seriesId][]": "WWPRB",
                      "facets[seriesId][]": "WYTCB",
-                     "facets[seriesId][]": "WYTCP"
+                     "facets[seriesId][]": "WYTCP",
 }
 
-api_response = requests.get(
-    "https://api.eia.gov/v2/seds/data/?frequency=annual&data[0]=value&facets[seriesId][]=BFPRB&facets[seriesId][]=BMTCB&facets[seriesId][]=GEEGP&facets[seriesId][]=GETCB&facets[seriesId][]=HYTCB&facets[seriesId][]=HYTCP&facets[seriesId][]=SOTCB&facets[seriesId][]=SOTGP&facets[seriesId][]=WWPRB&facets[seriesId][]=WYTCB&facets[seriesId][]=WYTCP&start=2013&sort[0][column]=stateId&sort[0][direction]=asc&sort[1][column]=period&sort[1][direction]=desc&offset=0&length=5000",
-    params=request_params
-)
+data = []
+api_url ="https://api.eia.gov/v2/seds/data/?frequency=annual&data[0]=value&facets[seriesId][]=BFPRB&facets[seriesId][]=BMTCB&facets[seriesId][]=GEEGP&facets[seriesId][]=GETCB&facets[seriesId][]=HYTCB&facets[seriesId][]=HYTCP&facets[seriesId][]=SOTCB&facets[seriesId][]=SOTGP&facets[seriesId][]=WWPRB&facets[seriesId][]=WYTCB&facets[seriesId][]=WYTCP&start=2013&sort[0][column]=stateId&sort[0][direction]=asc&sort[1][column]=period&sort[1][direction]=desc&offset=0&length=5000"
+offset = 0
+batch_size = 5000
+
+while True:
+    request_params["offset"] = offset
+    request_params["length"] = batch_size
+
+    api_response = requests.get(api_url, params=request_params)
+    response_json = json.loads(api_response.content)
+
+    data.extend(response_json['response']['data'])
+
+    # If the number of records retrieved is less than the batch size, it means there's no more data to fetch.
+    if len(response_json['response']['data']) < batch_size:
+        break
+
+    offset += batch_size
 
 print(api_response.content)
 
-# %% Parse result and convert to Pandas dataframe and save as CSV
-json_data = json.loads(api_response.content)
+# %% Convert to Pandas dataframe and save as CSV
+renewables_df = pd.DataFrame(data)
 
-response_json = json_data['response']  
-total_data_points = response_json['total']
-renewables_df = pd.DataFrame(response_json['data'])
-
-print(total_data_points)
 print(renewables_df)
 
 renewables_df.to_csv("RawData/EIARenewablesByState.csv")
