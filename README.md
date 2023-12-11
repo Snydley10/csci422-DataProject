@@ -129,10 +129,10 @@ After transformations, the datasets get uploaded and stored in an Azure Data Lak
 ## Implementation Details
 
 ### Repo Structure
-Source Code located in src directory with a folder for ingestion, transformation, and serving.
-* ingestion contains DataSet1.py, DataSet2.py, ExploratoryAnalysis.py, and RawData folder.
-* transformation contains Transformation.py and PivotedData folder
-* serving contains ProjectAnalysis.pbix and PivotedData folder
+Source Code located in src directory with a folder for ingestion, transformation, and serving. Raw and Pivoted Datasets also located in src.
+* ingestion contains DataSet1.py, DataSet2.py, and ExploratoryAnalysis.py
+* transformation contains Transformation.py
+* serving contains ProjectAnalysis.pbix
 
 ### Project Reproduction
 In order to reproduce the project, keep the information below in mind.
