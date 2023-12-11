@@ -124,10 +124,34 @@ After transformations, the datasets get uploaded and stored in an Azure Data Lak
 * Created new aggregate column of year/state in each dataset to create 1 to 1 relationship
 * Did some minimal cleaning up of datasets for better visualization
 * Created four Power BI pages to fully visualize and explore datasets and their relationship
+<p>&nbsp;</p>
 
-### Implementation Details
+## Implementation Details
 
-#### Repo Structure
+### Repo Structure
+Source Code located in src directory with a folder for ingestion, transformation, and serving.
+* ingestion contains DataSet1.py, DataSet2.py, ExploratoryAnalysis.py, and RawData folder.
+* transformation contains Transformation.py and PivotedData folder
+* serving contains ProjectAnalysis.pbix and PivotedData folder
 
-#### Project Reproduction
+### Project Reproduction
+In order to reproduce the project, keep the information below in mind.
 
+* Cloud Resources
+  * Need Azure Storage Account with blob storage set up for storing of datasets.
+    * Note: datasets may be stored locally as well if you do not wish to use an Azure Storage Account
+  * Set up an EIA account in order to get an API key
+  * In your repo you will need to create .config files for your Azure and EIA keys
+
+* Ingestion
+  * DataSet1.py and DataSet2.py need to be edited to upload to your specific Azure Blob Storage
+  * The API calls need to be edited to use your EIA account key .config file
+  * Datasets can be refreshed by changing API call to a newer year
+ 
+* Transformation
+  * Transformation.py needs to be edited to upload to your specific Azure Blob Storage
+  * Everything else should work seamlessly for transforming the data
+ 
+* Serving
+  * Connect Power BI to your Azure Blob Storage to get the data
+  * If the datasets change or get updated in Azure, Power BI should reflect that or else the refresh button can be clicked
