@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from azure.storage.filedatalake import DataLakeServiceClient
 
 # Read in the two dataframes
-prices_df = pd.read_csv("RawData/EIATotalEnergyPricesByState.csv")
-renewables_df = pd.read_csv("RawData/EIARenewablesByState.csv")
+prices_df = pd.read_csv("src\RawData\EIATotalEnergyPricesByState.csv")
+renewables_df = pd.read_csv("src\RawData\EIARenewablesByState.csv")
 
 # Convert million kilowatthours to billion Btu so all values are same unit in renewables_df
 mil_kwh_to_bil_btu = 3.412142

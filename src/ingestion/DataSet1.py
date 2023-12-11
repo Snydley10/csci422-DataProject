@@ -23,7 +23,7 @@ def initialize_storage_account(storage_account_name, storage_account_key):
 # %% Connect to Azure project storage account with account key
 storage_account_name = "projectstorage1"
 
-with open("keys/ADLSKey.config") as f:
+with open("src\keys\ADLSKey.config") as f:
     storage_account_key=f.readline()
 
 initialize_storage_account(storage_account_name, storage_account_key)
@@ -31,7 +31,7 @@ initialize_storage_account(storage_account_name, storage_account_key)
 print(service_client)
 
 # %% API call for complete dataset (energy generation and consumption for each renewable source by state and year)
-with open("keys/EIA-Key.config") as f:
+with open("src\keys\EIA-Key.config") as f:
     eia_key=f.readline()
 
 request_params = {"api_key" : eia_key,
@@ -82,7 +82,7 @@ renewables_df = pd.DataFrame(data)
 
 print(renewables_df)
 
-renewables_df.to_csv("RawData/EIARenewablesByState.csv")
+renewables_df.to_csv("src\RawData\EIARenewablesByState.csv")
 
 # %% Directory and file client creation for upload to Azure
 container_name = "project"
@@ -98,7 +98,7 @@ file_client = directory_client.create_file(file_name)
 print("File created in ADLS")
 
 # %% Upload the CSV to Azure directory
-upload_file_path = "RawData\EIARenewablesByState.csv"
+upload_file_path = "src\RawData\EIARenewablesByState.csv"
 upload_file = open(upload_file_path,'r')
 
 file_contents = upload_file.read()

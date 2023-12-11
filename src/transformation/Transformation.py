@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from azure.storage.filedatalake import DataLakeServiceClient
 
 # Read in the two dataframes
-prices_df = pd.read_csv("src/ingestion/RawData/EIATotalEnergyPricesByState.csv")
-renewables_df = pd.read_csv("src/ingestion/RawData/EIARenewablesByState.csv")
+prices_df = pd.read_csv("src/RawData/EIATotalEnergyPricesByState.csv")
+renewables_df = pd.read_csv("src/RawData/EIARenewablesByState.csv")
 
 # Convert million kilowatthours to billion Btu so all values are same unit in renewables_df
 mil_kwh_to_bil_btu = 3.412142
@@ -56,7 +56,7 @@ def initialize_storage_account(storage_account_name, storage_account_key):
 # Connect to Azure project storage account with account key
 storage_account_name = "projectstorage1"
 
-with open("keys/ADLSKey.config") as f:
+with open("src/keys/ADLSKey.config") as f:
     storage_account_key=f.readline()
 
 initialize_storage_account(storage_account_name, storage_account_key)
@@ -64,8 +64,8 @@ initialize_storage_account(storage_account_name, storage_account_key)
 print(service_client)        
 
 # Convert Dataframes to CSV files
-prices_df.to_csv("PivotedData/EIATotalEnergyPricesByStatePivoted.csv")
-renewables_df.to_csv("PivotedData/EIARenewablesByStatePivoted.csv")
+prices_df.to_csv("src/PivotedData/EIATotalEnergyPricesByStatePivoted.csv")
+renewables_df.to_csv("src/PivotedData/EIARenewablesByStatePivoted.csv")
 
 
 # Directory and file client creation for upload to Azure
@@ -85,8 +85,8 @@ file_client2 = directory_client.create_file(file_name2)
 print("Files created in ADLS")
 
 # Upload the CSV files to Azure directory
-upload_file_path = "PivotedData/EIATotalEnergyPricesByStatePivoted.csv"
-upload_file_path2 = "PivotedData/EIARenewablesByStatePivoted.csv"
+upload_file_path = "src/PivotedData/EIATotalEnergyPricesByStatePivoted.csv"
+upload_file_path2 = "src/PivotedData/EIARenewablesByStatePivoted.csv"
 upload_file = open(upload_file_path,'r')
 upload_file2 = open(upload_file_path2, 'r')
 
@@ -96,12 +96,12 @@ file_contents2 = upload_file2.read()
 file_client.upload_data(file_contents, overwrite=True)
 file_client2.upload_data(file_contents2, overwrite=True)
 
-print(upload_file_path, "and ", upload_file_path2, " has been successfully uploaded to ADLS")
+print(upload_file_path, "and ", upload_file_path2, " have been successfully uploaded to ADLS")
         
 # Connect to Azure project storage account with account key
 storage_account_name = "projectstorage1"
 
-with open("keys/ADLSKey.config") as f:
+with open("src/keys/ADLSKey.config") as f:
     storage_account_key=f.readline()
 
 initialize_storage_account(storage_account_name, storage_account_key)
