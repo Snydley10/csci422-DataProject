@@ -15,8 +15,6 @@ mask = (renewables_df['unit'] == 'Million kilowatthours')
 renewables_df.loc[mask, 'value'] = renewables_df.loc[mask, 'value'] * mil_kwh_to_bil_btu
 renewables_df.loc[mask, 'unit'] = 'Billion Btu'
 
-print(prices_df.head)
-print(renewables_df.head)
 # %% Pivot the DataFrames to get each row containing all values for the year/state combination
 prices_df = prices_df.pivot_table(index=['period', 'stateId'], columns='seriesId', values='value', aggfunc='first').reset_index()
 renewables_df = renewables_df.pivot_table(index=['period', 'stateId'], columns='seriesId', values='value', aggfunc='first').reset_index()
@@ -109,45 +107,3 @@ with open("keys/ADLSKey.config") as f:
 initialize_storage_account(storage_account_name, storage_account_key)
 
 print(service_client)
-
-# %% Print out basic info about the dataframes
-prices_df.info()
-renewables_df.info()
-
-# %% Create a line plot for Total Average Energy Price of all states
-plt.figure(figsize=(10, 6))
-
-# Group the data by 'State' and iterate through each group
-for state, state_data in prices_df.groupby('State'):
-    plt.plot(state_data['Year'], state_data['TotalEnergyPrice'], label=state)
-
-# Add labels and title
-plt.xlabel('Year')
-plt.ylabel('Total Average Energy Price (Dollars per Million Btu)')
-plt.title('Total Average Energy Price Over Time for All States')
-
-# Add a legend
-plt.legend(loc='upper left', bbox_to_anchor=(1, 1))  # Adjust legend position
-
-# Show the plot
-plt.grid(True)
-plt.show()
-
-# %% Create a line plot for WindProduction of all states
-plt.figure(figsize=(10, 6))
-
-# Group the data by 'State' and iterate through each group
-for state, state_data in renewables_df.groupby('State'):
-    plt.plot(state_data['Year'], state_data['WindProduction'], label=state)
-
-# Add labels and title
-plt.xlabel('Year')
-plt.ylabel('Wind Production (Billion Btu)')
-plt.title('Wind Production Over Time for All States')
-
-# Add a legend
-plt.legend(loc='upper left', bbox_to_anchor=(1, 1))  # Adjust legend position
-
-# Show the plot
-plt.grid(True)
-plt.show()
