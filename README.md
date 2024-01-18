@@ -1,5 +1,5 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=12462577&assignment_repo_type=AssignmentRepo)
-# CSCI 422 Project - Brandon Snyder
+# CSCI 422 Fundamentals of Data Engineering Project - Brandon Snyder
 # Renewable Energy Adoption and Impact on Energy Prices Analysis
 ## Business Solution
 The primary goal of this analysis is to investigate the impact of renewable energy adoption on the total average price of energy, specifically assessing whether increased production and consumption of renewable energy sources over the last 30 years has led to significant changes to average energy prices on a state-by-state basis. This analysis uses data from the Energy Information Administration from 1991 - 2021
