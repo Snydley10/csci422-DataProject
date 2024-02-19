@@ -24,7 +24,7 @@ Shifting from conventional energy sources towards renewables is of course very i
 
 
 ## Analysis Outcome
-### Full Power BI Report: [Project Analysis](https://app.powerbi.com/groups/5cce6a8a-a406-4090-9ed7-9a4878a1f1a9/reports/43661b24-1b11-45c8-b8fb-0a51191083d2/ReportSection3d9d241876f68bcdb6ea?experience=power-bi)
+### Full Power BI Report: [Project Analysis](https://app.powerbi.com/groups/5cce6a8a-a406-4090-9ed7-9a4878a1f1a9/reports/43661b24-1b11-45c8-b8fb-0a51191083d2/ReportSection3d9d241876f68bcdb6ea?experience=power-bi) or .pbix file located in src/serving can be downloaded and viewed on Power BI Desktop.
 
 Images from Report:
 
